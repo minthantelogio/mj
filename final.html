@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Farewell Mr. Justin - WhatsApp Style</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .fade-in-up {
+      animation: fadeInUp 0.4s ease-out forwards;
+    }
+    body {
+      background-color: #e5ddd5;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 bg-[#e5ddd5]">
+
+  <!-- Permission prompt -->
+  <div id="permissionPrompt" class="bg-white rounded-xl shadow-xl p-6 max-w-md w-full text-center">
+    <h2 class="text-lg font-semibold mb-4">Mr. Justin, can I play the farewell song?</h2>
+    <div class="flex justify-center gap-6">
+      <button id="btnYes" class="px-5 py-2 bg-green-600 text-white rounded hover:bg-green-700">Yes</button>
+      <button id="btnNo" class="px-5 py-2 bg-red-600 text-white rounded hover:bg-red-700">No</button>
+    </div>
+  </div>
+
+  <!-- WhatsApp-style container (hidden initially) -->
+  <div id="chatContainer" class="w-full max-w-md h-[90vh] bg-[#ece5dd] rounded-xl shadow-xl flex flex-col hidden mt-6">
+    <!-- Header -->
+    <div class="bg-[#075E54] text-white px-4 py-3 flex items-center gap-2 rounded-t-xl">
+      <div class="w-10 h-10 rounded-full bg-white text-[#075E54] font-bold flex items-center justify-center">M</div>
+      <div>
+        <div class="font-semibold">Min</div>
+        <div class="text-xs text-green-100">online</div>
+      </div>
+    </div>
+
+    <!-- Chat area -->
+    <div id="chatBox" class="flex-1 p-4 space-y-3 overflow-y-auto">
+      <!-- Messages will appear here -->
+    </div>
+
+    <!-- Footer -->
+    <div class="bg-[#f0f0f0] px-4 py-3 text-gray-500 text-sm rounded-b-xl">
+      You can't reply to this chat. — Min
+    </div>
+  </div>
+
+  <!-- Audio element -->
+  <audio id="bgMusic" loop>
+    <source src="https://minthantelogio.github.io/mj/farewell.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    const messages = [
+      "Hi Mr. Justin 👋",
+      "Thank you for everything you've done.",
+      "You’ve been such an important part of my life here at Elogio.",
+      "I will always remember you.",
+      "Thank you for all the lessons and the knowledge you shared with me.",
+      "You taught me not just work, but professionalism and patience.",
+      "One day, I hope I can become like you — a true professional.",
+      "I wish you the best on your next adventure, and happiness with your family.",
+      "Goodbye, Mr. Justin. — From Min 🙏"
+    ];
+
+    const permissionPrompt = document.getElementById('permissionPrompt');
+    const chatContainer = document.getElementById('chatContainer');
+    const chatBox = document.getElementById('chatBox');
+    const audio = document.getElementById('bgMusic');
+    const btnYes = document.getElementById('btnYes');
+    const btnNo = document.getElementById('btnNo');
+
+    let index = 0;
+
+    function showNextMessage() {
+      if (index < messages.length) {
+        const bubble = document.createElement("div");
+        bubble.textContent = messages[index];
+        bubble.className = "fade-in-up max-w-[75%] bg-[#dcf8c6] p-3 rounded-lg self-end text-sm shadow-sm";
+        chatBox.appendChild(bubble);
+        chatBox.scrollTop = chatBox.scrollHeight;
+        index++;
+        setTimeout(showNextMessage, 1800);
+      }
+    }
+
+    btnYes.addEventListener('click', () => {
+      // Hide permission prompt
+      permissionPrompt.style.display = 'none';
+      // Show chat container
+      chatContainer.classList.remove('hidden');
+      // Play music
+      audio.play().catch(e => {
+        // Catch any autoplay errors, e.g. browser blocks
+        console.log('Audio play failed:', e);
+      });
+      // Start showing messages
+      showNextMessage();
+    });
+
+    btnNo.addEventListener('click', () => {
+      permissionPrompt.innerHTML = `<p class="text-gray-700">Alright, no music. You can still read the farewell messages.</p>`;
+      // Show chat container anyway without music
+      chatContainer.classList.remove('hidden');
+      showNextMessage();
+    });
+  </script>
+
+</body>
+</html>
