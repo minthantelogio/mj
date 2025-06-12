@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Farewell Mr. Justin - WhatsApp Style</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .fade-in-up {
+      animation: fadeInUp 0.4s ease-out forwards;
+    }
+    body {
+      background-color: #e5ddd5;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+  <!-- WhatsApp-style container -->
+  <div class="w-full max-w-md h-[90vh] bg-[#ece5dd] rounded-xl shadow-xl flex flex-col">
+    <!-- Header -->
+    <div class="bg-[#075E54] text-white px-4 py-3 flex items-center gap-2 rounded-t-xl">
+      <div class="w-10 h-10 rounded-full bg-white text-[#075E54] font-bold flex items-center justify-center">J</div>
+      <div>
+        <div class="font-semibold">Mr. Justin</div>
+        <div class="text-xs text-green-100">online</div>
+      </div>
+    </div>
+
+    <!-- Chat area -->
+    <div id="chatBox" class="flex-1 p-4 space-y-3 overflow-y-auto">
+      <!-- Messages will appear here -->
+    </div>
+
+    <!-- Footer -->
+    <div class="bg-[#f0f0f0] px-4 py-3 text-gray-500 text-sm rounded-b-xl">
+      You can't reply to this chat. — Min
+    </div>
+  </div>
+
+  <!-- Background music -->
+  <audio autoplay loop hidden>
+    <source src="farewell.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    const messages = [
+      "Hi Mr. Justin 👋",
+      "Thank you for everything you've done.",
+      "You’ve been such an important part of my life here at Elogio.",
+      "I will always remember you.",
+      "Thank you for all the lessons and the knowledge you shared with me.",
+      "You taught me not just work, but professionalism and patience.",
+      "One day, I hope I can become like you — a true professional.",
+      "I wish you the best on your next adventure, and happiness with your family.",
+      "Goodbye, Mr. Justin. — From Min 🙏"
+    ];
+
+    const chatBox = document.getElementById("chatBox");
+    let index = 0;
+
+    function showNextMessage() {
+      if (index < messages.length) {
+        const bubble = document.createElement("div");
+        bubble.textContent = messages[index];
+        bubble.className = "fade-in-up max-w-[75%] bg-[#dcf8c6] p-3 rounded-lg self-end text-sm shadow-sm";
+        chatBox.appendChild(bubble);
+        chatBox.scrollTop = chatBox.scrollHeight;
+        index++;
+        setTimeout(showNextMessage, 1800);
+      }
+    }
+
+    showNextMessage();
+  </script>
+
+</body>
+</html>
